@@ -75,3 +75,16 @@ out500 = do.all(500)
 out1000 = do.all(1000)
 out.all = list(out100, out500, out1000)
 save(out.all, file="out_simulation_randomy.Rda")
+
+## analyze outputs
+get.table = function(mat){
+  z = mat[-(1:3),]
+  rbind(mat[1:3,],
+        apply(z,2,min),
+        apply(z,2,function(y) quantile(y,.25)),
+        apply(z,2,median),
+        apply(z,2,function(y) quantile(y,.75)),
+        apply(z,2,max),
+        apply(z,2,mean))
+}
+lapply(out.all, get.table)
