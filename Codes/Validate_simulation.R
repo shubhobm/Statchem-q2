@@ -87,3 +87,13 @@ get.table = function(mat){
         apply(z,2,mean))
 }
 lapply(out.all, get.table)
+
+
+## lasso trace plot and cv plot
+pdf('lassoplot.pdf',9,5)
+par(mfrow=c(1,2))
+plot(cv.obj1$glmnet.fit, "lambda",col="black", xlab="log(lambda)")
+abline(v=with(cv.obj1, log(lambda[which.min(cvm)])), lty=2)
+plot(cv.obj1, ylab=" 5-fold MSPE", xlab="log(lambda)")
+par(mfrow=c(1,1))
+dev.off()
